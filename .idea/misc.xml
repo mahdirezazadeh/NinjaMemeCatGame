@@ -3,6 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Projects/Uni/1400-1401_Winter/Android/NinjaMemeCatGame/app/src/main/res/drawable/bg_gradient.xml" value="0.294" />
+        <entry key="..\:/Projects/Uni/1400-1401_Winter/Android/NinjaMemeCatGame/app/src/main/res/drawable/splash_background.xml" value="0.22" />
+        <entry key="..\:/Projects/Uni/1400-1401_Winter/Android/NinjaMemeCatGame/app/src/main/res/layout/activity_levels.xml" value="0.36666666666666664" />
+        <entry key="..\:/Projects/Uni/1400-1401_Winter/Android/NinjaMemeCatGame/app/src/main/res/layout/activity_main.xml" value="0.36666666666666664" />
+        <entry key="..\:/Projects/Uni/1400-1401_Winter/Android/NinjaMemeCatGame/app/src/main/res/layout/activity_splash_screen.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Mahdi/AndroidStudioProjects/NinjaMemeCat/app/src/main/res/layout/activity_main.xml" value="0.11145833333333334" />
       </map>
     </option>
