@@ -27,8 +27,11 @@
             android:name=".MainActivity"
             android:exported="true" />
         <activity
-            android:name=".LevelsActivity"
-            android:exported="false" />
+            android:name=".LevelsListActivity"
+            android:exported="true" />
+        <activity
+            android:name=".LevelActivity"
+            android:exported="true" />
     </application>
 
 </manifest>
