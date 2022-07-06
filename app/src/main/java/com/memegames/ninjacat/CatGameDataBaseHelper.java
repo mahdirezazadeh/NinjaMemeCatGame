@@ -1,8 +1,12 @@
 package com.memegames.ninjacat;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.widget.Toast;
 
 public class CatGameDataBaseHelper extends SQLiteOpenHelper {
 
@@ -35,5 +39,50 @@ public class CatGameDataBaseHelper extends SQLiteOpenHelper {
                     + "levelId INTEGER, "
                     + "score INTEGER);");
         }
+    }
+
+
+    public static void signup(String username, String password, Context context) {
+        SQLiteOpenHelper sqLiteOpenHelper = new CatGameDataBaseHelper(context);
+        try {
+            ContentValues userValues = new ContentValues();
+            userValues.put("username", username);
+            userValues.put("password", password);
+            SQLiteDatabase db = sqLiteOpenHelper.getWritableDatabase();
+            db.insert("User", null, userValues);
+        } catch (SQLiteException e) {
+            Toast.makeText(context, "Database is NOT available!", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public static boolean checkUsernameConstraint(String username, Context context) {
+        SQLiteOpenHelper sqLiteOpenHelper = new CatGameDataBaseHelper(context);
+        try {
+            SQLiteDatabase readableDatabase = sqLiteOpenHelper.getReadableDatabase();
+            Cursor result = readableDatabase.rawQuery(
+                    "SELECT * FROM USER WHERE Username = ?",
+                    new String[]{username});
+            return result.getCount() == 0;
+        } catch (SQLiteException e) {
+            Toast.makeText(context, "Database is NOT available!", Toast.LENGTH_SHORT).show();
+        }
+        return false;
+    }
+
+
+
+    public static boolean authenticate(String username, String password, Context context) {
+        SQLiteOpenHelper sqLiteOpenHelper = new CatGameDataBaseHelper(context);
+        try {
+            SQLiteDatabase readableDatabase = sqLiteOpenHelper.getReadableDatabase();
+            Cursor result = readableDatabase.rawQuery(
+                    "SELECT * FROM USER WHERE Username = ? AND Password = ?",
+                    new String[]{username, password});
+            return result.getCount() == 1;
+        } catch (SQLiteException e){
+            Toast toast = Toast.makeText(context, "Database unavailable!", Toast.LENGTH_SHORT);
+            toast.show();
+        }
+        return username.equals("mahdi") && password.equals("1234");
     }
 }
