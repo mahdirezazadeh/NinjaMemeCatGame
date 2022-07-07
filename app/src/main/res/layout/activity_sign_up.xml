@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SignUpActivity"
+    android:orientation="vertical"
+    android:gravity="center">
+
+    <!--    name box layout-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:text="Username:"
+            android:layout_width="0dp"
+            android:layout_weight="0.10"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            android:layout_marginStart="60dp"
+            android:layout_marginEnd="5dp"
+            android:labelFor="@id/usernameSignUpEditText"/>
+
+        <EditText
+            android:layout_width="0dp"
+            android:layout_weight="0.10"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="60dp"
+            android:id="@+id/usernameSignUpEditText"
+            android:maxLines="1"
+            android:lines="1"
+            android:singleLine="true"
+            android:background="#2196F3"/>
+    </LinearLayout>
+
+    <!--    password box layout-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:text="Password:"
+            android:layout_width="0dp"
+            android:layout_weight="0.10"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="60dp"
+            android:layout_marginEnd="5dp"
+            android:gravity="start"
+            android:labelFor="@id/passwordSignUpEditText"/>
+
+        <EditText
+            android:layout_width="0dp"
+            android:layout_weight="0.10"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="60dp"
+            android:id="@+id/passwordSignUpEditText"
+            android:maxLines="1"
+            android:lines="1"
+            android:singleLine="true"
+            android:background="#2196F3"/>
+    </LinearLayout>
+
+    <!--    password box layout-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:text="Password:"
+            android:layout_width="0dp"
+            android:layout_weight="0.10"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="60dp"
+            android:layout_marginEnd="5dp"
+            android:gravity="start"
+            android:labelFor="@id/passwordConfirmEditText"/>
+
+        <EditText
+            android:layout_width="0dp"
+            android:layout_weight="0.10"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="60dp"
+            android:id="@+id/passwordConfirmEditText"
+            android:maxLines="1"
+            android:lines="1"
+            android:singleLine="true"
+            android:background="#2196F3"/>
+    </LinearLayout>
+
+    <!--    button box layout-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:gravity="center"
+        android:layout_marginTop="100dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:layout_width="100dp"
+            android:layout_weight="0.10"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="90dp"
+            android:background="#CDDC39"
+            android:id="@+id/btnSignUpa"
+            android:text="Sign up"/>
+    </LinearLayout>
+</LinearLayout>
