@@ -7,18 +7,40 @@
     android:orientation="vertical"
     tools:context=".LevelsListActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/levels"
-        android:layout_gravity="center"
-        android:textSize="25sp"
-        android:layout_margin="10dp"/>
-
-    <ListView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/list_levels"
-        android:entries="@array/levels"/>
+        android:layout_height="match_parent"
+        android:layout_weight="7"
+        android:gravity="center">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/levels"
+            android:layout_gravity="center"
+            android:textSize="25sp"
+            android:layout_margin="10dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="2">
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/list_levels"
+            android:entries="@array/levels"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="7">
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/settings"
+            android:background="?android:attr/selectableItemBackground" />
+    </LinearLayout>
 
 </LinearLayout>
