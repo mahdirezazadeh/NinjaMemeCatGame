@@ -9,6 +9,8 @@ public class LevelsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_levels);
+        if (getSupportActionBar() != null)
+            getSupportActionBar().hide();
+        setContentView(new GameView(this, 1));
     }
 }
