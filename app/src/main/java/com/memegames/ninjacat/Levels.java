@@ -29,8 +29,8 @@ public class Levels {
     }
 
     public static final Levels[] levels = {
-            new Levels("Level 1", R.drawable.star0, R.drawable.level1),
-            new Levels("Level 2", R.drawable.star0, R.drawable.level2),
-            new Levels("Level 3", R.drawable.star0, R.drawable.level3)
+//            new Levels("Level 1", R.drawable.star0, R.drawable.level_1),
+//            new Levels("Level 2", R.drawable.star0, R.drawable.level_2),
+//            new Levels("Level 3", R.drawable.star0, R.drawable.level_3)
     };
 }

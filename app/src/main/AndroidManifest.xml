@@ -13,28 +13,49 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.NinjaMemeCat"
         tools:targetApi="31">
+
+        <activity
+            android:name=".ProfileActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="false"
+            android:screenOrientation="portrait"/>
+
         <activity
             android:name=".SignUpActivity"
-            android:exported="false" />
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="false"
+            android:screenOrientation="portrait"/>
+
         <activity
             android:name=".LoginActivity"
-            android:exported="false"/>
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="false"
+            android:screenOrientation="portrait"/>
+
         <activity
             android:name=".SplashScreenActivity"
             android:exported="true"
-            android:theme="@style/SplashTheme">
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:theme="@style/SplashTheme"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".LevelsListActivity"
-            android:exported="true" />
+            android:exported="false"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait"/>
+
         <activity
             android:name=".LevelActivity"
-            android:exported="true" />
+            android:exported="false"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait"/>
+
     </application>
 
 </manifest>
