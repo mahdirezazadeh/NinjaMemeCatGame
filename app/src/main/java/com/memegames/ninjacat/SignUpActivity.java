@@ -29,7 +29,7 @@ public class SignUpActivity extends AppCompatActivity {
             String passwordConfirm = loadTextStringFromEditText(R.id.passwordConfirmEditText);
             if (checkConstraints(username, password, passwordConfirm)) {
                 signup(username, password, this);
-                Intent intent = new Intent(SignUpActivity.this, GameActivity.class);
+                Intent intent = new Intent(SignUpActivity.this, LevelsActivity.class);
                 intent.putExtra("username", username);
                 SignUpActivity.this.startActivity(intent);
                 finish();

@@ -8,7 +8,7 @@ import android.os.CountDownTimer;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-public class GameActivity extends AppCompatActivity {
+public class LevelsActivity extends AppCompatActivity {
     GameView game;
 
     int timeBySeconds;

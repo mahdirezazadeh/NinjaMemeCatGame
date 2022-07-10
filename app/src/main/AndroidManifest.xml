@@ -17,14 +17,8 @@
             android:name=".SignUpActivity"
             android:exported="false" />
         <activity
-            android:name=".GameActivity"
-            android:exported="true" >
-
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
-
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
+            android:name=".LevelsActivity"
+            android:exported="false" >
         </activity>
         <activity
             android:name=".LoginActivity"
@@ -33,11 +27,11 @@
             android:name=".SplashScreenActivity"
             android:exported="true"
             android:theme="@style/SplashTheme">
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
     </application>
 
