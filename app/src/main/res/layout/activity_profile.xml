@@ -85,7 +85,7 @@
             android:lines="1"
             android:singleLine="true"
             android:background="@drawable/edit_text_background"
-            android:hint="password"
+            android:hint="new password"
             android:gravity="center"
             android:inputType="textPassword"/>
 
