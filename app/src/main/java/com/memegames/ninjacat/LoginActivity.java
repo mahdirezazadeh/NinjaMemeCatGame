@@ -39,10 +39,12 @@ public class LoginActivity extends AppCompatActivity {
             Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
             LoginActivity.this.startActivity(intent);
         }));
+
     }
 
     private String loadTextStringFromEditText(int id) {
         EditText editText = findViewById(id);
         return editText.getText().toString();
     }
+
 }

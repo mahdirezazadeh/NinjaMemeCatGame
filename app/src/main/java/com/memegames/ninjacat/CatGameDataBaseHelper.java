@@ -81,8 +81,6 @@ public class CatGameDataBaseHelper extends SQLiteOpenHelper {
                     "SELECT * FROM USER WHERE Username = ? AND Password = ?",
                     new String[]{username, password});
             String x = String.valueOf(result.getCount());
-            Toast toast = Toast.makeText(context, x, Toast.LENGTH_SHORT);
-            toast.show();
             return result.getCount() == 1;
         } catch (SQLiteException e){
             Toast toast = Toast.makeText(context, "Database unavailable!", Toast.LENGTH_SHORT);

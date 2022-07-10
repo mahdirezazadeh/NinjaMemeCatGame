@@ -1,42 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:gravity="center">
+    android:gravity="center"
+    android:layout_gravity="center"
+    android:layout_margin="50dp"
+    android:background="@drawable/layout_activity_list_item_bg">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="2">
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        android:layout_margin="5dp">
 
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/level_image"/>
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/level_image"
+            android:layout_width="wrap_content"
+            android:layout_height="150dp"
+            android:layout_margin="10dp"
+            android:layout_gravity="center"
+            android:src="@drawable/level_1"/>
 
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_margin="5dp">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/level_name"
             android:layout_weight="1"
-            android:gravity="center"
-            android:layout_margin="15dp"/>
+            android:textSize="25sp"
+            android:autoSizeMaxTextSize="50dp"
+            android:autoSizeMinTextSize="15dp"
+            android:textColor="@color/black"
+            android:text="LEVEL!"
+            android:gravity="center"/>
 
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/level_star"
             android:layout_weight="1"
-            android:layout_gravity="center"
+            android:src="@drawable/star0"
             android:layout_margin="15dp"/>
 
     </LinearLayout>

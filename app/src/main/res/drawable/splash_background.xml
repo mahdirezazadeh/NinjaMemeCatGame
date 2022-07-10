@@ -2,8 +2,11 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:drawable="@drawable/background1"/>
-    <item>
-        <bitmap android:gravity="center"
+    <item
+        android:width="215dp"
+        android:height="100dp"
+        android:gravity="center">
+        <bitmap android:gravity="fill"
             android:src="@drawable/l"/>
     </item>
 </layer-list>
