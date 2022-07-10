@@ -157,7 +157,7 @@ public class GameView extends View {
 
     private void updateScoreBoard() {
         TextView powerView = (TextView) getRootView().findViewById(R.id.powerView);
-        powerView.setText(String.format("Mouth space: %d", player.getPower()));
+        powerView.setText(String.format("Capacity: %d", player.getPower()));
         TextView scoreView = (TextView) getRootView().findViewById(R.id.scoreView);
         scoreView.setText(String.format("Score: %d", player.getScore()));
     }
@@ -471,11 +471,11 @@ public class GameView extends View {
     public void winGame() {
         Activity activity = (Activity) getContext();
         AlertDialog alertDialog = new AlertDialog.Builder(getContext()).create();
-        alertDialog.setTitle("Successful");
+        alertDialog.setTitle("YOU DID IT");
         alertDialog.setIcon(R.drawable.annoting_cat_close_100px);
         alertDialog.setCancelable(false);
         alertDialog.setMessage(String.format("Score: %d", player.getScore()));
-        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK",
+        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Bring on the next",
                 (dialog, which) -> {
                     dialog.dismiss();
                     activity.finish();

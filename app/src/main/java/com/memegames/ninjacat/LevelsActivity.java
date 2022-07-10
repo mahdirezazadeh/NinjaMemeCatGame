@@ -20,7 +20,7 @@ public class LevelsActivity extends AppCompatActivity {
     TextView LevelIDView;
     LinearLayout gameView;
     private int startPower;
-    private int level = 3;
+    private int level = 1;
     private String username = "username";
 
 
@@ -70,7 +70,7 @@ public class LevelsActivity extends AppCompatActivity {
     }
 
     private void initScoreBoard() {
-        powerView.setText(String.format("Mouth space: %d", startPower));
+        powerView.setText(String.format("Capacity: %d", startPower));
         scoreView.setText(String.format("Score: %d", 0));
         LevelIDView.setText(String.format("Level: %d", level));
         UsernameView.setText(String.format("Username: %s", username));
