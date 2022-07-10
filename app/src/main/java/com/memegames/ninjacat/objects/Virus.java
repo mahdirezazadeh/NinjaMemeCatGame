@@ -1,4 +1,6 @@
-package com.memegames.ninjacat;
+package com.memegames.ninjacat.objects;
+
+import com.memegames.ninjacat.enums.Movement;
 
 public class Virus {
     private int x;
@@ -10,6 +12,7 @@ public class Virus {
     private int power;
     private int prize;
     private Movement currentMove;
+    private boolean justMeetPlayer;
 
     public Virus() {
     }
@@ -109,5 +112,13 @@ public class Virus {
 
     public void setPrize(int prize) {
         this.prize = prize;
+    }
+
+    public boolean getJustMeetPlayer() {
+        return justMeetPlayer;
+    }
+
+    public void setJustMeetPlayer(boolean justMeetPlayer) {
+        this.justMeetPlayer = justMeetPlayer;
     }
 }

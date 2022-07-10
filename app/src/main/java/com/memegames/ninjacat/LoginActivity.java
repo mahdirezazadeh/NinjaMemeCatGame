@@ -28,7 +28,7 @@ public class LoginActivity extends AppCompatActivity {
             String password = loadTextStringFromEditText(R.id.passwordEditText);
             String username = loadTextStringFromEditText(R.id.usernameEditText).toLowerCase(Locale.ROOT);
             if (authenticate(username, password, this)) {
-                Intent intent = new Intent(LoginActivity.this, LevelsActivity.class);
+                Intent intent = new Intent(LoginActivity.this, GameActivity.class);
                 intent.putExtra("username", username);
                 LoginActivity.this.startActivity(intent);
             } else {

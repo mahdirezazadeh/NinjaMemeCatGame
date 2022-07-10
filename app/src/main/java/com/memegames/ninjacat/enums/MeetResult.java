@@ -1,4 +1,4 @@
-package com.memegames.ninjacat;
+package com.memegames.ninjacat.enums;
 
 public enum MeetResult {
     NONE,

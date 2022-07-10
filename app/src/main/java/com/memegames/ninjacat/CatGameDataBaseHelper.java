@@ -8,6 +8,11 @@ import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.widget.Toast;
 
+import com.memegames.ninjacat.objects.LevelSetting;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class CatGameDataBaseHelper extends SQLiteOpenHelper {
 
     private static final String DB_NAME = "catgame"; // the name of our database
@@ -35,9 +40,73 @@ public class CatGameDataBaseHelper extends SQLiteOpenHelper {
                     + "IMAGE_RESOURCE_ID INTEGER);");
 
             db.execSQL("CREATE TABLE LEVEL (_id INTEGER PRIMARY KEY AUTOINCREMENT, "
+                    + "levelNumber INTEGER, "
+                    + "maxScore INTEGER, "
+                    + "cloumnsNumber INTEGER, "
+                    + "rowsNumber INTEGER, "
+                    + "blocksNumber INTEGER, "
+                    + "highLevelVirusCount INTEGER, "
+                    + "highLevelVirusPower INTEGER, "
+                    + "highLevelVirusPrize INTEGER, "
+                    + "lowLevelVirusCount INTEGER, "
+                    + "lowLevelVirusPower INTEGER, "
+                    + "lowLevelVirusPrize INTEGER, "
+                    + "scoreReductionAmount INTEGER, "
+                    + "gameTime INTEGER, "
+                    + "playerStartPower INTEGER);");
+
+            db.execSQL("CREATE TABLE LEVEL_USER (_id INTEGER PRIMARY KEY AUTOINCREMENT, "
                     + "userId INTEGER, "
                     + "levelId INTEGER, "
                     + "score INTEGER);");
+
+            ArrayList<LevelSetting> levels = new ArrayList<>();
+            levels.add(new LevelSetting(1,
+                    5,
+                    7,
+                    5,
+                    1,
+                    4,
+                    20,
+                    3,
+                    2,
+                    10,
+                    10,
+                    120,
+                    12,
+                    50));
+
+            levels.add(new LevelSetting(2,
+                    5,
+                    8,
+                    8,
+                    2,
+                    4,
+                    20,
+                    4,
+                    2,
+                    10,
+                    10,
+                    120,
+                    12,
+                    80));
+
+            levels.add(new LevelSetting(3,
+                    6,
+                    8,
+                    10,
+                    3,
+                    4,
+                    20,
+                    4,
+                    2,
+                    10,
+                    10,
+                    120,
+                    12,
+                    100));
+
+            insert(levels, db);
         }
     }
 
@@ -70,7 +139,6 @@ public class CatGameDataBaseHelper extends SQLiteOpenHelper {
     }
 
 
-
     public static boolean authenticate(String username, String password, Context context) {
         SQLiteOpenHelper sqLiteOpenHelper = new CatGameDataBaseHelper(context);
         try {
@@ -79,10 +147,35 @@ public class CatGameDataBaseHelper extends SQLiteOpenHelper {
                     "SELECT * FROM USER WHERE Username = ? AND Password = ?",
                     new String[]{username, password});
             return result.getCount() == 1;
-        } catch (SQLiteException e){
+        } catch (SQLiteException e) {
             Toast toast = Toast.makeText(context, "Database unavailable!", Toast.LENGTH_SHORT);
             toast.show();
         }
-        return username.equals("mahdi") && password.equals("1234");
+        return false;
+    }
+
+    public static Cursor loadGameSettingsByLevel(int level, Context context) {
+        SQLiteOpenHelper sqLiteOpenHelper = new CatGameDataBaseHelper(context);
+        try {
+            SQLiteDatabase readableDatabase = sqLiteOpenHelper.getReadableDatabase();
+            Cursor result = readableDatabase.rawQuery(
+                    "SELECT * FROM LEVEL WHERE levelNumber = ?",
+                    new String[]{String.valueOf(level)});
+            return result;
+        } catch (SQLiteException e) {
+            Toast toast = Toast.makeText(context, "Database unavailable!", Toast.LENGTH_SHORT);
+            toast.show();
+        }
+        return null;
+    }
+
+    private void insert(List<LevelSetting> levels, SQLiteDatabase db) {
+
+        for (LevelSetting l : levels) {
+
+            db.execSQL("INSERT INTO LEVEL " +
+                    "(levelNumber, cloumnsNumber, rowsNumber, blocksNumber, highLevelVirusCount, highLevelVirusPower, highLevelVirusPrize, lowLevelVirusCount, lowLevelVirusPower, lowLevelVirusPrize, maxScore, scoreReductionAmount, gameTime, playerStartPower) VALUES" +
+                    "(" + l.levelNumber() + ", " + l.columnsNumber() + ", " + l.rowsNumber() + ", " + l.blocksNumber() + ", " + l.highLevelVirusCount() + ", " + l.highLevelVirusPower() + ", " + l.highLevelVirusPrize() + ", " + l.lowLevelVirusCount() + ", " + l.lowLevelVirusPower() + ", " + l.lowLevelVirusPrize() + ", " + l.maxScore() + ", " + l.scoreReductionAmount() + ", " + l.gameTime() + ", " + l.playerStartPower() + ");");
+        }
     }
 }

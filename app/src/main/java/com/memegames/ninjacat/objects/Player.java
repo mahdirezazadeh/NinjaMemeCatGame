@@ -1,4 +1,6 @@
-package com.memegames.ninjacat;
+package com.memegames.ninjacat.objects;
+
+import com.memegames.ninjacat.enums.Movement;
 
 public class Player {
     private int x;

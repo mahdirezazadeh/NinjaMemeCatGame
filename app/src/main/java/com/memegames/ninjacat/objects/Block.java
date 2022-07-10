@@ -1,4 +1,4 @@
-package com.memegames.ninjacat;
+package com.memegames.ninjacat.objects;
 
 public class Block {
     private int x;

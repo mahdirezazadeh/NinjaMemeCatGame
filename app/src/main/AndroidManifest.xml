@@ -17,7 +17,7 @@
             android:name=".SignUpActivity"
             android:exported="false" />
         <activity
-            android:name=".LevelsActivity"
+            android:name=".GameActivity"
             android:exported="true" >
 
         <intent-filter>
