@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">NinjaMemeCat</string>
+
+    <string name="levels">LEVELS</string>
+
+    <string-array name="levels">
+        <item>Level 1</item>
+        <item>Level 2 (Coming Soon…)</item>
+        <item>Level 3 (Coming Soon…)</item>
+    </string-array>
+
 </resources>

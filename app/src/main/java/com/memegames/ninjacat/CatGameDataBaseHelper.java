@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.graphics.Bitmap;
 import android.widget.Toast;
 
 import com.memegames.ninjacat.objects.LevelSetting;
@@ -37,7 +38,7 @@ public class CatGameDataBaseHelper extends SQLiteOpenHelper {
             db.execSQL("CREATE TABLE USER (_id INTEGER PRIMARY KEY AUTOINCREMENT, "
                     + "UserName TEXT, "
                     + "Password TEXT, "
-                    + "IMAGE_RESOURCE_ID INTEGER);");
+                    + "IMAGE_RESOURCE BLOB);");
 
             db.execSQL("CREATE TABLE LEVEL (_id INTEGER PRIMARY KEY AUTOINCREMENT, "
                     + "levelNumber INTEGER, "
@@ -100,12 +101,13 @@ public class CatGameDataBaseHelper extends SQLiteOpenHelper {
     }
 
 
-    public static void signup(String username, String password, Context context) {
+    public static void signup(String username, String password, byte[] image, Context context) {
         SQLiteOpenHelper sqLiteOpenHelper = new CatGameDataBaseHelper(context);
         try {
             ContentValues userValues = new ContentValues();
             userValues.put("username", username);
             userValues.put("password", password);
+            userValues.put("image_resource", image);
             SQLiteDatabase db = sqLiteOpenHelper.getWritableDatabase();
             db.insert("User", null, userValues);
         } catch (SQLiteException e) {
@@ -135,6 +137,7 @@ public class CatGameDataBaseHelper extends SQLiteOpenHelper {
             Cursor result = readableDatabase.rawQuery(
                     "SELECT * FROM USER WHERE Username = ? AND Password = ?",
                     new String[]{username, password});
+            String x = String.valueOf(result.getCount());
             return result.getCount() == 1;
         } catch (SQLiteException e) {
             Toast toast = Toast.makeText(context, "Database unavailable!", Toast.LENGTH_SHORT);
