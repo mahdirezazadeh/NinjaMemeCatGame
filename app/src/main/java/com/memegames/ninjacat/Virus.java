@@ -8,19 +8,18 @@ public class Virus {
     private int pixelX;
     private int pixelY;
     private int power;
-    private int color;
+    private int prize;
     private Movement currentMove;
 
     public Virus() {
     }
 
-    public Virus(int x, int y, int power, int color) {
+    public Virus(int x, int y, int power) {
         this.x = x;
         this.y = y;
         this.newX = x;
         this.newY = y;
         this.power = power;
-        this.color = color;
     }
 
 
@@ -64,14 +63,6 @@ public class Virus {
         this.power = power;
     }
 
-    public int getColor() {
-        return color;
-    }
-
-    public void setColor(int color) {
-        this.color = color;
-    }
-
     public int getNewX() {
         return newX;
     }
@@ -110,5 +101,13 @@ public class Virus {
 
     public void setPixelY(int pixelY) {
         this.pixelY = pixelY;
+    }
+
+    public int getPrize() {
+        return prize;
+    }
+
+    public void setPrize(int prize) {
+        this.prize = prize;
     }
 }
