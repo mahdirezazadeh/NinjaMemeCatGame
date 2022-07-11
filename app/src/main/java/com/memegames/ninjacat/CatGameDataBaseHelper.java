@@ -138,7 +138,9 @@ public class CatGameDataBaseHelper extends SQLiteOpenHelper {
                     "SELECT * FROM USER WHERE Username = ? AND Password = ?",
                     new String[]{username, password});
             String x = String.valueOf(result.getCount());
-            return result.getCount() == 1;
+            boolean res = result.getCount() == 1;
+            result.close();
+            return res;
         } catch (SQLiteException e) {
             Toast toast = Toast.makeText(context, "Database unavailable!", Toast.LENGTH_SHORT);
             toast.show();
@@ -146,7 +148,7 @@ public class CatGameDataBaseHelper extends SQLiteOpenHelper {
         return false;
     }
 
-    public static Cursor loadGameSettingsByLevel(int level, Context context) {
+    public static Cursor loadGameSettingsByLevel(long level, Context context) {
         SQLiteOpenHelper sqLiteOpenHelper = new CatGameDataBaseHelper(context);
         try {
             SQLiteDatabase readableDatabase = sqLiteOpenHelper.getReadableDatabase();

@@ -8,7 +8,7 @@ import android.os.CountDownTimer;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-public class LevelsActivity extends AppCompatActivity {
+public class LevelActivity extends AppCompatActivity {
     GameView game;
 
     int timeBySeconds;
@@ -20,7 +20,7 @@ public class LevelsActivity extends AppCompatActivity {
     TextView LevelIDView;
     LinearLayout gameView;
     private int startPower;
-    private int level = 1;
+    private long level = 1;
     private String username = "username";
 
 
@@ -32,7 +32,7 @@ public class LevelsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_game);
         if (getIntent().getExtras() != null) {
             username = getIntent().getExtras().getString("username");
-            level = getIntent().getExtras().getInt("level");
+            level = getIntent().getExtras().getLong("level");
         }
 
 
@@ -84,8 +84,7 @@ public class LevelsActivity extends AppCompatActivity {
                 int seconds = (int) (millisUntilFinished / 1000);
                 int minutes = seconds / 60;
                 seconds = seconds % 60;
-                timeView.setText(String.format("%02d", minutes)
-                        + ":" + String.format("%02d", seconds));
+                timeView.setText(String.format("%02d", minutes) + ":" + String.format("%02d", seconds));
             }
 
             public void onFinish() {

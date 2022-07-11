@@ -51,7 +51,7 @@
             android:screenOrientation="portrait"/>
 
         <activity
-            android:name=".LevelsActivity"
+            android:name=".LevelActivity"
             android:exported="false"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:screenOrientation="portrait"/>

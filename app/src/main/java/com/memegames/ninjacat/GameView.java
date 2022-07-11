@@ -35,7 +35,7 @@ public class GameView extends View {
     private static final int VIRUS_MARGIN = 40;
     private static final int PLAYER_MARGIN = 30;
 
-    private int level;
+    private long level;
 
     private int numberOfColumns = 7;
     private int numberOfRows = 8;
@@ -52,7 +52,7 @@ public class GameView extends View {
     private int cellSize;
     private int startHeight;
     private int startWidth;
-    private int frameNumber = 0;
+    private int frameNumber;
     private float actionDownX;
     private float actionDownY;
     private boolean run = true;
@@ -67,12 +67,7 @@ public class GameView extends View {
     private Bucket bucket;
 
 
-    public GameView(Context context) {
-        super(context);
-        level = 1;
-    }
-
-    public GameView(Context context, int level) {
+    public GameView(Context context, long level) {
         super(context);
         this.level = level;
         initValuesByLevel();
@@ -222,13 +217,10 @@ public class GameView extends View {
             cellSize = colCellSize;
             startHeight = (getHeight() - (numberOfRows * cellSize)) / 2;
             startWidth = getWidth() - (numberOfColumns * cellSize);
-            width = getWidth();
-
         } else {
             cellSize = rowCellSize;
             startWidth = (getWidth() - (numberOfColumns * cellSize)) / 2;
             startHeight = getHeight() - (numberOfRows * cellSize);
-            height = getHeight();
         }
 
 //        startHeight = height - (numberOfRows * cellSize);
