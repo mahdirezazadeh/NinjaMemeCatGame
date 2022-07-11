@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/game_back_ground"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_100sdp"
+        android:layout_weight="0.2"
+        android:background="#6B5321AF"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/LevelID"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textColor="#3C4A58"
+            android:background="#AFAFAF"
+            android:text="Level"
+            android:textSize="@dimen/_16sdp" />
+
+        <TextView
+            android:id="@+id/GameUsernameView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:background="#AFAFAF"
+            android:text="Username"
+            android:textSize="@dimen/_16sdp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/GameView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="10"
+        android:gravity="center"
+        android:orientation="vertical">
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_weight="0.2"
+        android:background="#6B5321AF"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/scoreView"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:background="#AFAFAF"
+            android:text="score"
+            android:textSize="@dimen/_16sdp" />
+        <TextView
+            android:id="@+id/powerView"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:background="#AFAFAF"
+            android:text="Power"
+            android:textSize="@dimen/_16sdp" />
+        <TextView
+            android:id="@+id/TimeView"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:background="#AFAFAF"
+            android:text="Time"
+            android:textSize="@dimen/_16sdp"/>
+    </LinearLayout>
+
+</LinearLayout>
