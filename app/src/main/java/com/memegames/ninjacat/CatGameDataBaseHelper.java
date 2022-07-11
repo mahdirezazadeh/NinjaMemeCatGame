@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Bitmap;
+import android.text.Editable;
 import android.view.View;
 import android.widget.Toast;
 
@@ -222,4 +223,58 @@ public class CatGameDataBaseHelper extends SQLiteOpenHelper {
         }
         return null;
     }
+
+
+    public static byte[] loadProfilePicture(Context context) {
+        SQLiteOpenHelper sqLiteOpenHelper = new CatGameDataBaseHelper(context);
+        try {
+            SQLiteDatabase readableDatabase = sqLiteOpenHelper.getReadableDatabase();
+            Cursor result = readableDatabase.rawQuery(
+                    "SELECT * FROM USER WHERE LOG_IN = 1",
+                    new String[]{});
+
+            if (result.moveToNext()) {
+                byte[] profilePic = result.getBlob(3);
+                result.close();
+                return profilePic;
+            }
+            return null;
+        } catch (SQLiteException e) {
+            Toast toast = Toast.makeText(context, "Database unavailable!", Toast.LENGTH_SHORT);
+            toast.show();
+        }
+        return null;
+    }
+
+
+
+    public static String updateUserByPrevUsername(String username, String password, byte[] img, String oldUsername, Context context) {
+        String currentUsername = oldUsername;
+        SQLiteOpenHelper sqLiteOpenHelper = new CatGameDataBaseHelper(context);
+        try {
+            SQLiteDatabase db = sqLiteOpenHelper.getWritableDatabase();
+            ContentValues userValues = new ContentValues();
+
+            if(!username.isEmpty() && !username.equals(oldUsername)) {
+                if (checkUsernameConstraint(username, context)) {
+                    userValues.put("UserName", username);
+                    currentUsername = username;
+                } else {
+                    Toast.makeText(context, "Username is already taken!", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            if(!password.isEmpty())
+                userValues.put("Password", password);
+            if(img!=null)
+                userValues.put("IMAGE_RESOURCE", img);
+
+            db.update("USER", userValues, "UserName = ?", new String[]{oldUsername});
+        } catch (SQLiteException e) {
+            Toast toast = Toast.makeText(context, "Database unavailable!", Toast.LENGTH_SHORT);
+            toast.show();
+        }
+        return currentUsername;
+    }
+
 }

@@ -82,7 +82,7 @@ public class SignUpActivity extends AppCompatActivity {
 //            String passwordConfirm = loadTextStringFromEditText(R.id.passwordConfirmEditText);
             String passwordConfirm = password;
 
-            if(!password.equals("") && !username.equals("") && !passwordConfirm.equals("") && selectedImageBitmap != null) {
+            if(!password.equals("") && !username.equals("") && !passwordConfirm.equals("")) {
                 if (checkConstraints(username, password, passwordConfirm)) {
 
                     ByteArrayOutputStream byteArray = new ByteArrayOutputStream();

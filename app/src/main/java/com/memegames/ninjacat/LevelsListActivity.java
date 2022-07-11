@@ -46,6 +46,7 @@ public class LevelsListActivity extends AppCompatActivity {
         AdapterView.OnItemClickListener itemClickListener = (adapterView, view, position, id) -> {
             Intent intent = new Intent(LevelsListActivity.this, LevelActivity.class);
             intent.putExtra("level", id + 1);
+            intent.putExtra("username", username);
             startActivity(intent);
         };
         listLevels.setOnItemClickListener(itemClickListener);

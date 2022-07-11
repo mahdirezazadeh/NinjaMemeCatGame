@@ -1,13 +1,12 @@
 package com.memegames.ninjacat;
 
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.appcompat.app.AppCompatActivity;
+import static com.memegames.ninjacat.CatGameDataBaseHelper.loadProfilePicture;
+import static com.memegames.ninjacat.CatGameDataBaseHelper.updateUserByPrevUsername;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -15,16 +14,20 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.appcompat.app.AppCompatActivity;
+
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 public class ProfileActivity extends AppCompatActivity {
 
     Bitmap selectedImageBitmap;
     de.hdodenhof.circleimageview.CircleImageView profile;
+    Uri selectedImageUri = null;
 
     String username = null;
 
@@ -39,8 +42,17 @@ public class ProfileActivity extends AppCompatActivity {
         Button logout = (Button) findViewById(R.id.logoutButton);
         ImageButton change_image = (ImageButton) findViewById(R.id.changeImageButton);
         EditText usernameEditText = (EditText) findViewById(R.id.usernameEditText);
+        EditText passwordEditText = (EditText) findViewById(R.id.new_passEditText);
         profile = (de.hdodenhof.circleimageview.CircleImageView) findViewById(R.id.userProfileImage);
-
+        {
+            byte[] image_db = loadProfilePicture(this);
+            if (image_db == null) {
+                Toast.makeText(getApplicationContext(), "null image", Toast.LENGTH_SHORT).show();
+            } else {
+                Bitmap bmp = BitmapFactory.decodeByteArray(image_db, 0, image_db.length);
+                profile.setImageBitmap(bmp);
+            }
+        }
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             username = extras.getString("username");
@@ -63,16 +75,26 @@ public class ProfileActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Toast toast = Toast.makeText(getApplicationContext(), "cancel", Toast.LENGTH_SHORT);
                 toast.show();
+                Intent intent = new Intent(ProfileActivity.this, LoginActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                ProfileActivity.this.startActivity(intent);
                 finish();
             }
         });
 
-        save.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast toast = Toast.makeText(getApplicationContext(), "save", Toast.LENGTH_SHORT);
-                toast.show();
+        save.setOnClickListener(view -> {
+            byte[] img;
+            try{
+                ByteArrayOutputStream byteArray = new ByteArrayOutputStream();
+                selectedImageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArray);
+                img = byteArray.toByteArray();
+            }catch (Exception ignore){
+                img = null;
             }
+            username = updateUserByPrevUsername(usernameEditText.getText().toString(), passwordEditText.getText().toString(), img, username, this);
+
+            Toast toast = Toast.makeText(getApplicationContext(), "save", Toast.LENGTH_SHORT);
+            toast.show();
         });
 
         logout.setOnClickListener(view -> {
@@ -82,12 +104,11 @@ public class ProfileActivity extends AppCompatActivity {
             Intent intent = new Intent(ProfileActivity.this, LoginActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             ProfileActivity.this.startActivity(intent);
+            finish();
         });
 
     }
-
-    private void imageChooser()
-    {
+    private void imageChooser() {
         Intent i = new Intent();
         i.setType("image/*");
         i.setAction(Intent.ACTION_GET_CONTENT);
@@ -101,15 +122,14 @@ public class ProfileActivity extends AppCompatActivity {
                     Intent data = result.getData();
                     // do your operation from here....
                     if (data != null && data.getData() != null) {
-                        Uri selectedImageUri = data.getData();
+                        selectedImageUri = data.getData();
                         try {
                             selectedImageBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImageUri);
-                        }
-                        catch (IOException e) {e.printStackTrace();
+                        } catch (IOException e) {
+                            e.printStackTrace();
                         }
                         profile.setImageBitmap(selectedImageBitmap);
                     }
                 }
             });
-
 }
