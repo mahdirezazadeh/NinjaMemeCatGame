@@ -324,4 +324,21 @@ public class CatGameDataBaseHelper extends SQLiteOpenHelper {
             toast.show();
         }
     }
+
+    public static Cursor loadUserScoreByLevel(int level, Context context) {
+        SQLiteOpenHelper sqLiteOpenHelper = new CatGameDataBaseHelper(context);
+        int userId = loadCurrentUserId(context);
+
+        try {
+            SQLiteDatabase readableDatabase = sqLiteOpenHelper.getReadableDatabase();
+            Cursor cursor = readableDatabase.rawQuery(
+                    "Select * from LEVEL_USER where userId = ? and levelId = ?",
+                    new String[]{String.valueOf(userId), String.valueOf(level)});
+            return cursor;
+        }catch (SQLiteException e) {
+            Toast toast = Toast.makeText(context, "Database unavailable!", Toast.LENGTH_SHORT);
+            toast.show();
+        }
+        return null;
+    }
 }

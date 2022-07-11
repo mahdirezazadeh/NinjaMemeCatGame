@@ -17,6 +17,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -90,7 +91,7 @@ public class SignUpActivity extends AppCompatActivity {
                     byte[] img = byteArray.toByteArray();
 
                     signup(username, password, img, this);
-                    Intent intent = new Intent(SignUpActivity.this, LevelsListActivity.class);
+                    Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
                     intent.putExtra("username", username);
                     SignUpActivity.this.startActivity(intent);
                     finish();
