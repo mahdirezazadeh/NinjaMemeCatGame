@@ -12,6 +12,8 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
 
+import static com.memegames.ninjacat.CatGameDataBaseHelper.change_log_status_to_login;
+
 import java.util.logging.Level;
 
 public class LevelsListActivity extends AppCompatActivity {

@@ -37,6 +37,7 @@ public class SignUpActivity extends AppCompatActivity {
     Uri selectedImageUri = null;
     EditText userName = null;
     EditText userPass = null;
+    byte[] img = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,12 +83,14 @@ public class SignUpActivity extends AppCompatActivity {
 //            String passwordConfirm = loadTextStringFromEditText(R.id.passwordConfirmEditText);
             String passwordConfirm = password;
 
-            if(!password.equals("") && !username.equals("") && !passwordConfirm.equals("") && selectedImageBitmap != null) {
+            if(!password.equals("") && !username.equals("") && !passwordConfirm.equals("")) {
                 if (checkConstraints(username, password, passwordConfirm)) {
 
-                    ByteArrayOutputStream byteArray = new ByteArrayOutputStream();
-                    selectedImageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArray);
-                    byte[] img = byteArray.toByteArray();
+                    if (selectedImageBitmap != null) {
+                        ByteArrayOutputStream byteArray = new ByteArrayOutputStream();
+                        selectedImageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArray);
+                        img = byteArray.toByteArray();
+                    }
 
                     signup(username, password, img, this);
                     Intent intent = new Intent(SignUpActivity.this, LevelsListActivity.class);

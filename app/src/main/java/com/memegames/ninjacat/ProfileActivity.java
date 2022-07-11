@@ -4,9 +4,13 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
+import static com.memegames.ninjacat.CatGameDataBaseHelper.get_image;
+import static com.memegames.ninjacat.CatGameDataBaseHelper.change_log_status_to_logout;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -80,11 +84,21 @@ public class ProfileActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Toast toast = Toast.makeText(getApplicationContext(), "logout", Toast.LENGTH_SHORT);
                 toast.show();
+                change_log_status_to_logout(username, ProfileActivity.this);
                 Intent intent = new Intent(ProfileActivity.this, LoginActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 ProfileActivity.this.startActivity(intent);
             }
         });
+
+        byte[] image_db = get_image(username, this);
+        if (image_db == null) {
+            Toast.makeText(getApplicationContext(), "null image", Toast.LENGTH_SHORT).show();
+        }
+        else {
+            Bitmap bmp = BitmapFactory.decodeByteArray(image_db, 0, image_db.length);
+            profile.setImageBitmap(bmp);
+        }
 
     }
 
