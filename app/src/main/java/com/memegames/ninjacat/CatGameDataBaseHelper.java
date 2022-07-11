@@ -6,9 +6,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.graphics.Bitmap;
-import android.text.Editable;
-import android.view.View;
 import android.widget.Toast;
 
 import com.memegames.ninjacat.objects.LevelSetting;
@@ -224,7 +221,6 @@ public class CatGameDataBaseHelper extends SQLiteOpenHelper {
         return null;
     }
 
-
     public static byte[] loadProfilePicture(Context context) {
         SQLiteOpenHelper sqLiteOpenHelper = new CatGameDataBaseHelper(context);
         try {
@@ -246,8 +242,6 @@ public class CatGameDataBaseHelper extends SQLiteOpenHelper {
         return null;
     }
 
-
-
     public static String updateUserByPrevUsername(String username, String password, byte[] img, String oldUsername, Context context) {
         String currentUsername = oldUsername;
         SQLiteOpenHelper sqLiteOpenHelper = new CatGameDataBaseHelper(context);
@@ -255,7 +249,7 @@ public class CatGameDataBaseHelper extends SQLiteOpenHelper {
             SQLiteDatabase db = sqLiteOpenHelper.getWritableDatabase();
             ContentValues userValues = new ContentValues();
 
-            if(!username.isEmpty() && !username.equals(oldUsername)) {
+            if (!username.isEmpty() && !username.equals(oldUsername)) {
                 if (checkUsernameConstraint(username, context)) {
                     userValues.put("UserName", username);
                     currentUsername = username;
@@ -264,9 +258,9 @@ public class CatGameDataBaseHelper extends SQLiteOpenHelper {
                 }
             }
 
-            if(!password.isEmpty())
+            if (!password.isEmpty())
                 userValues.put("Password", password);
-            if(img!=null)
+            if (img != null)
                 userValues.put("IMAGE_RESOURCE", img);
 
             db.update("USER", userValues, "UserName = ?", new String[]{oldUsername});
@@ -277,4 +271,57 @@ public class CatGameDataBaseHelper extends SQLiteOpenHelper {
         return currentUsername;
     }
 
+    public static int loadCurrentUserId(Context context) {
+        SQLiteOpenHelper sqLiteOpenHelper = new CatGameDataBaseHelper(context);
+        try {
+            SQLiteDatabase readableDatabase = sqLiteOpenHelper.getReadableDatabase();
+            Cursor result = readableDatabase.rawQuery(
+                    "SELECT * FROM USER WHERE LOG_IN = ?",
+                    new String[]{"1"});
+
+            if (result.moveToNext()) {
+                int userId = result.getInt(0);
+                return userId;
+            }
+        } catch (SQLiteException e) {
+            Toast toast = Toast.makeText(context, "Database unavailable!", Toast.LENGTH_SHORT);
+            toast.show();
+        }
+        return 0;
+    }
+
+    public static void saveUserScore(long levelId, int score, Context context) {
+        SQLiteOpenHelper sqLiteOpenHelper = new CatGameDataBaseHelper(context);
+        int userId = loadCurrentUserId(context);
+
+        try {
+            SQLiteDatabase readableDatabase = sqLiteOpenHelper.getReadableDatabase();
+            Cursor cursor = readableDatabase.rawQuery(
+                    "Select * from LEVEL_USER where userId = ? and levelId = ?",
+                    new String[]{String.valueOf(userId), String.valueOf(levelId)});
+            if (cursor.moveToNext()) {
+                int prevScore = cursor.getInt(3);
+                if (score > prevScore) {
+                    cursor.close();
+                    SQLiteDatabase db = sqLiteOpenHelper.getWritableDatabase();
+                    ContentValues levelUserValue = new ContentValues();
+                    levelUserValue.put("score", score);
+
+                    db.update("LEVEL_USER", levelUserValue, "userId = ? and levelId = ?",
+                            new String[]{String.valueOf(userId), String.valueOf(levelId)});
+                }
+            } else {
+                cursor.close();
+                SQLiteDatabase db = sqLiteOpenHelper.getWritableDatabase();
+                ContentValues levelUserValue = new ContentValues();
+                levelUserValue.put("score", score);
+                levelUserValue.put("levelId", levelId);
+                levelUserValue.put("userId", userId);
+                db.insert("LEVEL_USER", null, levelUserValue);
+            }
+        } catch (SQLiteException e) {
+            Toast toast = Toast.makeText(context, "Database unavailable!", Toast.LENGTH_SHORT);
+            toast.show();
+        }
+    }
 }
