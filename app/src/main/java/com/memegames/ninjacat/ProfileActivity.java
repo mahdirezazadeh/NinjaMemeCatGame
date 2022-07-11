@@ -75,15 +75,13 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
-        logout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast toast = Toast.makeText(getApplicationContext(), "logout", Toast.LENGTH_SHORT);
-                toast.show();
-                Intent intent = new Intent(ProfileActivity.this, LoginActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                ProfileActivity.this.startActivity(intent);
-            }
+        logout.setOnClickListener(view -> {
+            Toast toast = Toast.makeText(getApplicationContext(), "logout", Toast.LENGTH_SHORT);
+            toast.show();
+            CatGameDataBaseHelper.invalidateLogin(this);
+            Intent intent = new Intent(ProfileActivity.this, LoginActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            ProfileActivity.this.startActivity(intent);
         });
 
     }
