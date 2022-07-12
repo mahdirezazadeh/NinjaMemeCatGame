@@ -85,10 +85,14 @@ public class SignUpActivity extends AppCompatActivity {
 
             if(!password.equals("") && !username.equals("") && !passwordConfirm.equals("")) {
                 if (checkConstraints(username, password, passwordConfirm)) {
-
-                    ByteArrayOutputStream byteArray = new ByteArrayOutputStream();
-                    selectedImageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArray);
-                    byte[] img = byteArray.toByteArray();
+                    byte[] img;
+                    try{
+                        ByteArrayOutputStream byteArray = new ByteArrayOutputStream();
+                        selectedImageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArray);
+                        img = byteArray.toByteArray();
+                    }catch (Exception ignore){
+                        img = null;
+                    }
 
                     signup(username, password, img, this);
                     Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);

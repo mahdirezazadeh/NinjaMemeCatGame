@@ -28,9 +28,7 @@ public class LevelSetting {
                         int lowLevelVirusPower,
                         int lowLevelVirusPrize,
                         int scoreReductionAmount,
-                        int gameTime,
-                        int playerStartPower,
-                        int maxScore) {
+                        int gameTime) {
         this.levelNumber = levelNumber;
         this.columnsNumber = columnsNumber;
         this.rowsNumber = rowsNumber;
@@ -43,8 +41,15 @@ public class LevelSetting {
         this.lowLevelVirusPrize = lowLevelVirusPrize;
         this.scoreReductionAmount = scoreReductionAmount;
         this.gameTime = gameTime;
-        this.playerStartPower = playerStartPower;
-        this.maxScore = maxScore;
+        this.playerStartPower = calculatePlayerStartPower(highLevelVirusCount, highLevelVirusPower, lowLevelVirusCount, lowLevelVirusPower);
+        this.maxScore = highLevelVirusCount * highLevelVirusPrize + lowLevelVirusCount * lowLevelVirusPrize;
+    }
+
+    private int calculatePlayerStartPower(int highLevelVirusCount, int highLevelVirusPower, int lowLevelVirusCount, int lowLevelVirusPower) {
+        int power = (highLevelVirusCount * highLevelVirusPower + lowLevelVirusCount * lowLevelVirusPower) / 2;
+        if (power % 2 == 0)
+            return power;
+        return power + 1;
     }
 
     public int levelNumber() {
@@ -155,7 +160,7 @@ public class LevelSetting {
         this.maxScore = maxScore;
     }
 
-    public int maxScore(){
+    public int maxScore() {
         return maxScore;
     }
 }

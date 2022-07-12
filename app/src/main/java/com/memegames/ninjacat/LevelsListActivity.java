@@ -24,6 +24,7 @@ public class LevelsListActivity extends AppCompatActivity {
     int[] drawableIds;
     int[] stars;
     CustomAdapter adapter;
+    ListView listLevels;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,13 +40,35 @@ public class LevelsListActivity extends AppCompatActivity {
             username = extras.getString("username");
         }
 
-        textString = new String[]{"Level 1", "Level 2", "Level 3", "Level 4", "Level 5", "Level 6", "Level 7", "Level 8", "Level 9", "Level 10", "Level 11"};
+        textString = new String[]{
+                "Level 1",
+                "Level 2",
+                "Level 3",
+                "Level 4",
+                "Level 5",
+                "Level 6",
+                "Level 7",
+                "Level 8",
+                "Level 9",
+                "Level 10",
+                "Level 11"};
         stars = getScores(11);
-        drawableIds = new int[]{R.drawable.level_1, R.drawable.level_2, R.drawable.level_3, R.drawable.level_4, R.drawable.level_5, R.drawable.level_6, R.drawable.level_7, R.drawable.level_8, R.drawable.level_9, R.drawable.level_10, R.drawable.level_11};
+        drawableIds = new int[]{
+                R.drawable.level_1,
+                R.drawable.level_2,
+                R.drawable.level_3,
+                R.drawable.level_4,
+                R.drawable.level_5,
+                R.drawable.level_6,
+                R.drawable.level_7,
+                R.drawable.level_8,
+                R.drawable.level_9,
+                R.drawable.level_10,
+                R.drawable.level_11};
 
         adapter = new CustomAdapter(this, textString, drawableIds, stars);
 
-        ListView listLevels = (ListView) findViewById(R.id.list_levels);
+        listLevels = (ListView) findViewById(R.id.list_levels);
         listLevels.setAdapter(adapter);
 
 
@@ -70,14 +93,17 @@ public class LevelsListActivity extends AppCompatActivity {
         super.onResume();
         stars = getScores(11);
         adapter = new CustomAdapter(this, textString, drawableIds, stars);
+        listLevels.setAdapter(adapter);
+
     }
 
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        stars = getScores(11);
-        adapter = new CustomAdapter(this, textString, drawableIds, stars);
-    }
+//    @Override
+//    protected void onRestart() {
+//        super.onRestart();
+//        stars = getScores(11);
+//        adapter = new CustomAdapter(this, textString, drawableIds, stars);
+//        listLevels.setAdapter(adapter);
+//    }
 
     private int[] getScores(int levels) {
         int[] picIds = new int[levels];

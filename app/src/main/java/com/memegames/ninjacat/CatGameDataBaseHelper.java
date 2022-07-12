@@ -74,28 +74,26 @@ public class CatGameDataBaseHelper extends SQLiteOpenHelper {
                     2,
                     10,
                     10,
-                    120,
-                    12,
-                    50));
+                    120));
 
-            levels.add(new LevelSetting(2, 5, 8, 8, 2, 4, 20, 4, 2, 10, 10, 100, 12, 80));
+            levels.add(new LevelSetting(2, 5, 8, 8, 2, 4, 20, 4, 2, 10, 10, 100));
 
-            levels.add(new LevelSetting(3, 6, 8, 10, 3, 4, 20, 4, 2, 10, 10, 100, 12, 100));
+            levels.add(new LevelSetting(3, 6, 8, 10, 3, 4, 20, 4, 2, 10, 10, 100));
 
-            levels.add(new LevelSetting(4, 10, 8, 10, 4, 4, 20, 4, 2, 10, 10, 100, 12, 100));
+            levels.add(new LevelSetting(4, 10, 8, 10, 4, 4, 20, 4, 2, 10, 10, 100));
 
-            levels.add(new LevelSetting(5, 10, 3, 5, 3, 4, 20, 4, 2, 10, 10, 100, 12, 100));
+            levels.add(new LevelSetting(5, 10, 3, 5, 3, 4, 20, 4, 2, 10, 10, 100));
 
             insert(levels, db);
         }
         if (oldVersion < 2) {
             ArrayList<LevelSetting> levels = new ArrayList<>();
 
-            levels.add(new LevelSetting(6, 8, 10, 14, 5, 4, 20, 7, 2, 10, 10, 100, 18, 170));
+            levels.add(new LevelSetting(6, 8, 10, 14, 5, 4, 20, 7, 2, 10, 10, 100));
 
-            levels.add(new LevelSetting(7, 7, 7, 10, 5, 4, 20, 7, 2, 10, 10, 60, 18, 170));
+            levels.add(new LevelSetting(7, 7, 7, 10, 5, 4, 20, 7, 2, 10, 10, 60));
 
-            levels.add(new LevelSetting(8, 9, 7, 15, 5, 4, 20, 7, 2, 10, 10, 60, 18, 170));
+            levels.add(new LevelSetting(8, 9, 7, 15, 5, 4, 20, 7, 2, 10, 10, 60));
 
             insert(levels, db);
         }
@@ -335,7 +333,7 @@ public class CatGameDataBaseHelper extends SQLiteOpenHelper {
                     "Select * from LEVEL_USER where userId = ? and levelId = ?",
                     new String[]{String.valueOf(userId), String.valueOf(level)});
             return cursor;
-        }catch (SQLiteException e) {
+        } catch (SQLiteException e) {
             Toast toast = Toast.makeText(context, "Database unavailable!", Toast.LENGTH_SHORT);
             toast.show();
         }
