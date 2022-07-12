@@ -17,6 +17,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -82,15 +83,19 @@ public class SignUpActivity extends AppCompatActivity {
 //            String passwordConfirm = loadTextStringFromEditText(R.id.passwordConfirmEditText);
             String passwordConfirm = password;
 
-            if(!password.equals("") && !username.equals("") && !passwordConfirm.equals("") && selectedImageBitmap != null) {
+            if(!password.equals("") && !username.equals("") && !passwordConfirm.equals("")) {
                 if (checkConstraints(username, password, passwordConfirm)) {
-
-                    ByteArrayOutputStream byteArray = new ByteArrayOutputStream();
-                    selectedImageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArray);
-                    byte[] img = byteArray.toByteArray();
+                    byte[] img;
+                    try{
+                        ByteArrayOutputStream byteArray = new ByteArrayOutputStream();
+                        selectedImageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArray);
+                        img = byteArray.toByteArray();
+                    }catch (Exception ignore){
+                        img = null;
+                    }
 
                     signup(username, password, img, this);
-                    Intent intent = new Intent(SignUpActivity.this, LevelsListActivity.class);
+                    Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
                     intent.putExtra("username", username);
                     SignUpActivity.this.startActivity(intent);
                     finish();

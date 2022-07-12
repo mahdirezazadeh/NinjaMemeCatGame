@@ -6,7 +6,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.graphics.Bitmap;
 import android.widget.Toast;
 
 import com.memegames.ninjacat.objects.LevelSetting;
@@ -23,6 +22,7 @@ public class CatGameDataBaseHelper extends SQLiteOpenHelper {
         super(context, DB_NAME, null, DB_VERSION);
     }
 
+
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         updateMyDatabase(sqLiteDatabase, 0, DB_VERSION);
@@ -38,7 +38,8 @@ public class CatGameDataBaseHelper extends SQLiteOpenHelper {
             db.execSQL("CREATE TABLE USER (_id INTEGER PRIMARY KEY AUTOINCREMENT, "
                     + "UserName TEXT, "
                     + "Password TEXT, "
-                    + "IMAGE_RESOURCE BLOB);");
+                    + "IMAGE_RESOURCE BLOB,"
+                    + "LOG_IN INTEGER);");
 
             db.execSQL("CREATE TABLE LEVEL (_id INTEGER PRIMARY KEY AUTOINCREMENT, "
                     + "levelNumber INTEGER, "
@@ -73,28 +74,26 @@ public class CatGameDataBaseHelper extends SQLiteOpenHelper {
                     2,
                     10,
                     10,
-                    120,
-                    12,
-                    50));
+                    120));
 
-            levels.add(new LevelSetting(2, 5, 8, 8, 2, 4, 20, 4, 2, 10, 10, 100, 12, 80));
+            levels.add(new LevelSetting(2, 5, 8, 8, 2, 4, 20, 4, 2, 10, 10, 100));
 
-            levels.add(new LevelSetting(3, 6, 8, 10, 3, 4, 20, 4, 2, 10, 10, 100, 12, 100));
+            levels.add(new LevelSetting(3, 6, 8, 10, 3, 4, 20, 4, 2, 10, 10, 100));
 
-            levels.add(new LevelSetting(4, 10, 8, 10, 4, 4, 20, 4, 2, 10, 10, 100, 12, 100));
+            levels.add(new LevelSetting(4, 10, 8, 10, 4, 4, 20, 4, 2, 10, 10, 100));
 
-            levels.add(new LevelSetting(5, 10, 3, 5, 3, 4, 20, 4, 2, 10, 10, 100, 12, 100));
+            levels.add(new LevelSetting(5, 10, 3, 5, 3, 4, 20, 4, 2, 10, 10, 100));
 
             insert(levels, db);
         }
         if (oldVersion < 2) {
             ArrayList<LevelSetting> levels = new ArrayList<>();
 
-            levels.add(new LevelSetting(6, 8, 10, 14, 5, 4, 20, 7, 2, 10, 10, 100, 18, 170));
+            levels.add(new LevelSetting(6, 8, 10, 14, 5, 4, 20, 7, 2, 10, 10, 100));
 
-            levels.add(new LevelSetting(7, 7, 7, 10, 5, 4, 20, 7, 2, 10, 10, 60, 18, 170));
+            levels.add(new LevelSetting(7, 7, 7, 10, 5, 4, 20, 7, 2, 10, 10, 60));
 
-            levels.add(new LevelSetting(8, 9, 7, 15, 5, 4, 20, 7, 2, 10, 10, 60, 18, 170));
+            levels.add(new LevelSetting(8, 9, 7, 15, 5, 4, 20, 7, 2, 10, 10, 60));
 
             insert(levels, db);
         }
@@ -171,5 +170,173 @@ public class CatGameDataBaseHelper extends SQLiteOpenHelper {
                     "(levelNumber, cloumnsNumber, rowsNumber, blocksNumber, highLevelVirusCount, highLevelVirusPower, highLevelVirusPrize, lowLevelVirusCount, lowLevelVirusPower, lowLevelVirusPrize, maxScore, scoreReductionAmount, gameTime, playerStartPower) VALUES" +
                     "(" + l.levelNumber() + ", " + l.columnsNumber() + ", " + l.rowsNumber() + ", " + l.blocksNumber() + ", " + l.highLevelVirusCount() + ", " + l.highLevelVirusPower() + ", " + l.highLevelVirusPrize() + ", " + l.lowLevelVirusCount() + ", " + l.lowLevelVirusPower() + ", " + l.lowLevelVirusPrize() + ", " + l.maxScore() + ", " + l.scoreReductionAmount() + ", " + l.gameTime() + ", " + l.playerStartPower() + ");");
         }
+    }
+
+    public static void saveLogin(String username, Context context) {
+        SQLiteOpenHelper sqLiteOpenHelper = new CatGameDataBaseHelper(context);
+        try {
+            SQLiteDatabase db = sqLiteOpenHelper.getWritableDatabase();
+            ContentValues userValues = new ContentValues();
+            userValues.put("LOG_IN", 1);
+            db.update("USER", userValues, "UserName = ?", new String[]{username});
+        } catch (SQLiteException e) {
+            Toast toast = Toast.makeText(context, "Database unavailable!", Toast.LENGTH_SHORT);
+            toast.show();
+        }
+    }
+
+    public static void invalidateLogin(Context context) {
+        SQLiteOpenHelper sqLiteOpenHelper = new CatGameDataBaseHelper(context);
+        try {
+            SQLiteDatabase db = sqLiteOpenHelper.getWritableDatabase();
+            ContentValues userValues = new ContentValues();
+            userValues.put("LOG_IN", 0);
+            db.update("USER", userValues, "LOG_IN = ?", new String[]{"1"});
+        } catch (SQLiteException e) {
+            Toast toast = Toast.makeText(context, "Database unavailable!", Toast.LENGTH_SHORT);
+            toast.show();
+        }
+    }
+
+    public static String getLoggedInUser(Context context) {
+        SQLiteOpenHelper sqLiteOpenHelper = new CatGameDataBaseHelper(context);
+        try {
+            SQLiteDatabase readableDatabase = sqLiteOpenHelper.getReadableDatabase();
+            Cursor result = readableDatabase.rawQuery(
+                    "SELECT * FROM USER WHERE LOG_IN = 1",
+                    new String[]{});
+
+            if (result.moveToNext()) {
+                String username = result.getString(1);
+                result.close();
+                return username;
+            }
+            return null;
+        } catch (SQLiteException e) {
+            Toast toast = Toast.makeText(context, "Database unavailable!", Toast.LENGTH_SHORT);
+            toast.show();
+        }
+        return null;
+    }
+
+    public static byte[] loadProfilePicture(Context context) {
+        SQLiteOpenHelper sqLiteOpenHelper = new CatGameDataBaseHelper(context);
+        try {
+            SQLiteDatabase readableDatabase = sqLiteOpenHelper.getReadableDatabase();
+            Cursor result = readableDatabase.rawQuery(
+                    "SELECT * FROM USER WHERE LOG_IN = 1",
+                    new String[]{});
+
+            if (result.moveToNext()) {
+                byte[] profilePic = result.getBlob(3);
+                result.close();
+                return profilePic;
+            }
+            return null;
+        } catch (SQLiteException e) {
+            Toast toast = Toast.makeText(context, "Database unavailable!", Toast.LENGTH_SHORT);
+            toast.show();
+        }
+        return null;
+    }
+
+    public static String updateUserByPrevUsername(String username, String password, byte[] img, String oldUsername, Context context) {
+        String currentUsername = oldUsername;
+        SQLiteOpenHelper sqLiteOpenHelper = new CatGameDataBaseHelper(context);
+        try {
+            SQLiteDatabase db = sqLiteOpenHelper.getWritableDatabase();
+            ContentValues userValues = new ContentValues();
+
+            if (!username.isEmpty() && !username.equals(oldUsername)) {
+                if (checkUsernameConstraint(username, context)) {
+                    userValues.put("UserName", username);
+                    currentUsername = username;
+                } else {
+                    Toast.makeText(context, "Username is already taken!", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            if (!password.isEmpty())
+                userValues.put("Password", password);
+            if (img != null)
+                userValues.put("IMAGE_RESOURCE", img);
+
+            db.update("USER", userValues, "UserName = ?", new String[]{oldUsername});
+        } catch (SQLiteException e) {
+            Toast toast = Toast.makeText(context, "Database unavailable!", Toast.LENGTH_SHORT);
+            toast.show();
+        }
+        return currentUsername;
+    }
+
+    public static int loadCurrentUserId(Context context) {
+        SQLiteOpenHelper sqLiteOpenHelper = new CatGameDataBaseHelper(context);
+        try {
+            SQLiteDatabase readableDatabase = sqLiteOpenHelper.getReadableDatabase();
+            Cursor result = readableDatabase.rawQuery(
+                    "SELECT * FROM USER WHERE LOG_IN = ?",
+                    new String[]{"1"});
+
+            if (result.moveToNext()) {
+                int userId = result.getInt(0);
+                return userId;
+            }
+        } catch (SQLiteException e) {
+            Toast toast = Toast.makeText(context, "Database unavailable!", Toast.LENGTH_SHORT);
+            toast.show();
+        }
+        return 0;
+    }
+
+    public static void saveUserScore(long levelId, int score, Context context) {
+        SQLiteOpenHelper sqLiteOpenHelper = new CatGameDataBaseHelper(context);
+        int userId = loadCurrentUserId(context);
+
+        try {
+            SQLiteDatabase readableDatabase = sqLiteOpenHelper.getReadableDatabase();
+            Cursor cursor = readableDatabase.rawQuery(
+                    "Select * from LEVEL_USER where userId = ? and levelId = ?",
+                    new String[]{String.valueOf(userId), String.valueOf(levelId)});
+            if (cursor.moveToNext()) {
+                int prevScore = cursor.getInt(3);
+                if (score > prevScore) {
+                    cursor.close();
+                    SQLiteDatabase db = sqLiteOpenHelper.getWritableDatabase();
+                    ContentValues levelUserValue = new ContentValues();
+                    levelUserValue.put("score", score);
+
+                    db.update("LEVEL_USER", levelUserValue, "userId = ? and levelId = ?",
+                            new String[]{String.valueOf(userId), String.valueOf(levelId)});
+                }
+            } else {
+                cursor.close();
+                SQLiteDatabase db = sqLiteOpenHelper.getWritableDatabase();
+                ContentValues levelUserValue = new ContentValues();
+                levelUserValue.put("score", score);
+                levelUserValue.put("levelId", levelId);
+                levelUserValue.put("userId", userId);
+                db.insert("LEVEL_USER", null, levelUserValue);
+            }
+        } catch (SQLiteException e) {
+            Toast toast = Toast.makeText(context, "Database unavailable!", Toast.LENGTH_SHORT);
+            toast.show();
+        }
+    }
+
+    public static Cursor loadUserScoreByLevel(int level, Context context) {
+        SQLiteOpenHelper sqLiteOpenHelper = new CatGameDataBaseHelper(context);
+        int userId = loadCurrentUserId(context);
+
+        try {
+            SQLiteDatabase readableDatabase = sqLiteOpenHelper.getReadableDatabase();
+            Cursor cursor = readableDatabase.rawQuery(
+                    "Select * from LEVEL_USER where userId = ? and levelId = ?",
+                    new String[]{String.valueOf(userId), String.valueOf(level)});
+            return cursor;
+        } catch (SQLiteException e) {
+            Toast toast = Toast.makeText(context, "Database unavailable!", Toast.LENGTH_SHORT);
+            toast.show();
+        }
+        return null;
     }
 }

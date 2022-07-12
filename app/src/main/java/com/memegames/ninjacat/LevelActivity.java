@@ -81,6 +81,9 @@ public class LevelActivity extends AppCompatActivity {
     private CountDownTimer startTimerCountDown(GameView game, TextView timeView) {
         CountDownTimer countDownTimer = new CountDownTimer(timeBySeconds * 1000L, 1000) {
             public void onTick(long millisUntilFinished) {
+                if (!game.isRunning()) {
+                    cancel();
+                }
                 int seconds = (int) (millisUntilFinished / 1000);
                 int minutes = seconds / 60;
                 seconds = seconds % 60;

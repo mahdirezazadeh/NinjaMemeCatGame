@@ -445,6 +445,7 @@ public class GameView extends View {
 
     //    lose or win player
     private void losePlayer() {
+        CatGameDataBaseHelper.saveUserScore(level, player.getScore(), getContext());
         run = false;
         AlertDialog alertDialog = new AlertDialog.Builder(getContext()).create();
         Activity activity = (Activity) getContext();
@@ -461,6 +462,8 @@ public class GameView extends View {
     }
 
     public void winGame() {
+        run = false;
+        CatGameDataBaseHelper.saveUserScore(level, player.getScore(), getContext());
         Activity activity = (Activity) getContext();
         AlertDialog alertDialog = new AlertDialog.Builder(getContext()).create();
         alertDialog.setTitle("YOU DID IT");
